@@ -23,25 +23,31 @@ namespace _184905GameOfLife
         int PosX;
         int PosY;
         int LiveCounter;
+        int gridSize;
 
         Rectangle w = new Rectangle();
 
-        Rectangle[,] GridNoColour= new Rectangle[20, 20];
-        Rectangle[,] FutureGrid = new Rectangle[20, 20];
+        Rectangle[,] GridNoColour;
+        Rectangle[,] FutureGrid;
         //Rectangle[][] grid = new Rectangle[20][];
-        bool livetest = new bool();
+        
 
         DispatcherTimer dt = new DispatcherTimer();
 
         public MainWindow()
         {
             InitializeComponent();
+            //variables
+            gridSize = 20;
+            GridNoColour = new Rectangle[gridSize, gridSize];
+            FutureGrid = new Rectangle[gridSize, gridSize];
+
             dt.Interval = new TimeSpan(0,0,1);
             dt.Tick += Dt_Tick;
 
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < gridSize; j++)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < gridSize; i++)
                 {
                     Rectangle w = new Rectangle();
                     w.Height = 30;
@@ -58,9 +64,18 @@ namespace _184905GameOfLife
 
 
             }
-            for (int j = 0; j < 20; j++)
+
+            //debugging
+            //for (int i = 1; i < 4; i++)
+            //{
+                //GridNoColour[i, 1].Fill = Brushes.Yellow;
+               // GridNoColour[i%2+1, 2].Fill = Brushes.Yellow;
+            //}
+            //end debugging
+
+            for (int j = 0; j < gridSize; j++)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < gridSize; i++)
                 {
                     Rectangle w = new Rectangle();
                     w.Height = 30;
@@ -86,58 +101,9 @@ namespace _184905GameOfLife
 
         private void Dt_Tick(object sender, EventArgs e)
         {
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < gridSize; j++)
             {
-                for (int i = 0; i < 20; i++)
-                {
-                    if(LiveCounter == 3)
-                        //eVERYTHING DIES ONE AT A TIME, SO NEED TO MAKE NEW ARRAY TO HOLD VALUES TEMPORARRLY, THEN APLLY TO PROPER TIME
-                    {
-                    FutureGrid[j, i].Fill = Brushes.Yellow;
-                    }
-                    else if (LiveCounter < 2)
-                    {
-                        FutureGrid[j, i].Fill = Brushes.White;
-                    }
-                    else if (LiveCounter > 3)
-                    {
-                        FutureGrid[j, i].Fill = Brushes.White;
-                    }
-                    //if(LiveCounter == 3)
-                    //{
-                    //GridNoColour[j, i].Fill = Brushes.Yellow;
-                    //}
-                    
-                   
-                }
-            }
-            GridNoColour = FutureGrid;
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            int.TryParse(StartPositionX.Text, out PosX);
-            int.TryParse(StartPositionY.Text, out PosY);
-            if (PosX <= 0 || PosY <= 0)
-            {
-                MessageBox.Show("there is no zero, try again");
-            }
-            else
-            {
-                GridNoColour[PosX - 1, PosY - 1].Fill = Brushes.Yellow;
-            }
-           
-            StartPositionX.Text = "";
-            StartPositionY.Text = "";
-            
-        }
-
-        private void GameStartButton_Click(object sender, RoutedEventArgs e)
-        {
-            for (int j = 0; j < 20; j++)
-            {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < gridSize; i++)
                 {
                     LiveCounter = 0;
                     if (GridNoColour[j, i].Fill.ToString() == "#FFFFFF00")
@@ -175,6 +141,20 @@ namespace _184905GameOfLife
                             LiveCounter += 1;
                         }
                         MessageBox.Show(LiveCounter.ToString());
+                        if (LiveCounter == 3)
+                        //eVERYTHING DIES ONE AT A TIME, SO NEED TO MAKE NEW ARRAY TO HOLD VALUES TEMPORARRLY, THEN APLLY TO PROPER TIME
+                        {
+                            FutureGrid[j, i].Fill = Brushes.Yellow;
+                        }
+                        else if (LiveCounter < 2)
+                        {
+                            FutureGrid[j, i].Fill = Brushes.White;
+                        }
+                        else if (LiveCounter > 3)
+                        {
+                            FutureGrid[j, i].Fill = Brushes.White;
+                        }
+                        //  FutureGrid[j, i].Fill = Brushes.Yellow;
                     }
                     else
                     {
@@ -182,6 +162,42 @@ namespace _184905GameOfLife
                     }
                 }
             }
+            
+
+//            GridNoColour = FutureGrid;
+            for (int j = 0; j < gridSize; j++)
+            {
+                for (int i = 0; i < gridSize; i++)
+                {
+                    GridNoColour[j, i].Fill = FutureGrid[j, i].Fill;
+                    FutureGrid[j, i].Fill = Brushes.White;
+                }
+            }
+            
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            int.TryParse(StartPositionX.Text, out PosX);
+            int.TryParse(StartPositionY.Text, out PosY);
+            if (PosX <= 0 || PosY <= 0)
+            {
+                MessageBox.Show("there is no zero, try again");
+            }
+            else
+            {
+                GridNoColour[PosX - 1, PosY - 1].Fill = Brushes.Yellow;
+            }
+           
+            StartPositionX.Text = "";
+            StartPositionY.Text = "";
+            
+        }
+
+        private void GameStartButton_Click(object sender, RoutedEventArgs e)
+        {
+           
             dt.Start();
         }
     }
