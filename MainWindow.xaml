@@ -1,0 +1,19 @@
+﻿<Window x:Class="_184905GameOfLife.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_184905GameOfLife"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="775" Width="625">
+    
+    <Canvas x:Name="canvas">
+        <StackPanel>
+            <Label x:Name="WhatDoLabel"/>
+            <TextBox x:Name="StartPositionX" MaxLength="1"/>
+            <TextBox x:Name="StartPositionY" MaxLength="1"/>
+            <Button x:Name="StartButton" Content="Click to start the Setup of Neighbours!" Click="StartButton_Click"/>
+            <Button x:Name="GameStartButton" Content="Click to start the Game of Life!" Click="GameStartButton_Click"/>
+        </StackPanel>
+    </Canvas>
+</Window>
