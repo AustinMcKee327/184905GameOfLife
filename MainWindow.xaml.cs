@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*Austin McKee
+ *May 28, 2019
+ * This is the Game of Life. You add in squares to the board and watch them as they live or die.
+ * They live if they have 2 or 3 neighbors beside them, and come back to life if they have three neighbors when dead.
+ * They die if they have less than two neighbours or more than three.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
