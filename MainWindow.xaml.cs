@@ -66,10 +66,10 @@ namespace _184905GameOfLife
             }
 
             //debugging
-            //for (int i = 1; i < 4; i++)
+           // for (int i = 1; i < 4; i++)
             //{
-                //GridNoColour[i, 1].Fill = Brushes.Yellow;
-               // GridNoColour[i%2+1, 2].Fill = Brushes.Yellow;
+              //  GridNoColour[i, 1].Fill = Brushes.Yellow;
+                //GridNoColour[i%2+1, 2].Fill = Brushes.Yellow;
             //}
             //end debugging
 
@@ -106,43 +106,53 @@ namespace _184905GameOfLife
                 for (int i = 0; i < gridSize; i++)
                 {
                     LiveCounter = 0;
+                    if (i < gridSize-1 &&
+                        GridNoColour[j, i + 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (i>0 &&
+                        GridNoColour[j, i - 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (j< gridSize - 1 &&
+                        GridNoColour[j + 1, i].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (j > 0 &&
+                        GridNoColour[j - 1, i].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (j > 0 && i > 0 &&
+                        GridNoColour[j - 1, i - 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (j > 0 && i < gridSize - 1 &&
+                        GridNoColour[j - 1, i + 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (i > 0 && j < gridSize - 1 &&
+                        GridNoColour[j + 1, i - 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+                    if (j < gridSize - 1 && i < gridSize - 1 &&
+                        GridNoColour[j + 1, i + 1].Fill.ToString() == "#FFFFFF00")
+                    {
+                        LiveCounter += 1;
+                    }
+              //      MessageBox.Show(LiveCounter.ToString());
+               
                     if (GridNoColour[j, i].Fill.ToString() == "#FFFFFF00")
                     {
-                        if (GridNoColour[j, i + 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j, i - 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j + 1, i].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j - 1, i].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j - 1, i - 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j - 1, i + 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j + 1, i - 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        if (GridNoColour[j + 1, i + 1].Fill.ToString() == "#FFFFFF00")
-                        {
-                            LiveCounter += 1;
-                        }
-                        MessageBox.Show(LiveCounter.ToString());
-                        if (LiveCounter == 3)
-                        //eVERYTHING DIES ONE AT A TIME, SO NEED TO MAKE NEW ARRAY TO HOLD VALUES TEMPORARRLY, THEN APLLY TO PROPER TIME
+                      
+                        if (LiveCounter == 3|| LiveCounter==2)
+
                         {
                             FutureGrid[j, i].Fill = Brushes.Yellow;
                         }
@@ -154,12 +164,20 @@ namespace _184905GameOfLife
                         {
                             FutureGrid[j, i].Fill = Brushes.White;
                         }
+
                         //  FutureGrid[j, i].Fill = Brushes.Yellow;
                     }
-                    else
+                    else 
                     {
+                        if (LiveCounter == 3)
+                        {
+                            FutureGrid[j, i].Fill = Brushes.Yellow;
+                        }
+
+
 
                     }
+
                 }
             }
             
@@ -199,6 +217,11 @@ namespace _184905GameOfLife
         {
            
             dt.Start();
+        }
+
+        private void GamePause_Click(object sender, RoutedEventArgs e)
+        {
+            dt.Stop();
         }
     }
 }

@@ -14,6 +14,7 @@
             <TextBox x:Name="StartPositionY" MaxLength="1"/>
             <Button x:Name="StartButton" Content="Click to start the Setup of Neighbours!" Click="StartButton_Click"/>
             <Button x:Name="GameStartButton" Content="Click to start the Game of Life!" Click="GameStartButton_Click"/>
+            <Button x:Name="GamePause" Click="GamePause_Click" Content=" Click to Pause the Game"/>
         </StackPanel>
     </Canvas>
 </Window>
